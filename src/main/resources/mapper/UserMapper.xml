@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="anthea.secondhand_market.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="anthea.secondhand_market.domain.User">
+        <id property="id" column="id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="password" column="password" javaType="String" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" javaType="String" jdbcType="VARCHAR"/>
+        <result property="stuId" column="stu_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="phone" column="phone" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, password, gender, stu_id, phone
+    </sql>
+    <select id="verifyPassword" parameterType="anthea.secondhand_market.domain.User" resultMap="BaseResultMap">
+        select * from `user`
+        where name=#{name} AND password=#{password}
+    </select>
+    <update id="income">
+        update `user`
+        set balance=balance+#{money} where id = #{userId}
+    </update>
+    <update id="costMoney">
+        update `user`
+        set balance=balance - #{money} where id = #{userId}
+    </update>
+    <insert id="addUser" parameterType="anthea.secondhand_market.domain.User">
+        insert into `user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="password!=null">
+                password,
+            </if>
+            <if test="phone!=null">
+                phone,
+            </if>
+            <if test="balance!=null">
+                balance,
+            </if>
+            <if test="stu_id!=null">
+                stu_id,
+            </if>
+            <if test="gender!=null">
+                gender,
+            </if>
+        </trim>
+        <trim prefix="value(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="password!=null">
+                #{password},
+            </if>
+            <if test="phone!=null">
+                #{phone},
+            </if>
+            <if test="balance!=null">
+                #{balance},
+            </if>
+            <if test="stu_id!=null">
+                #{stuId},
+            </if>
+            <if test="gender!=null">
+                #{gender}
+            </if>
+        </trim>
+    </insert>
+</mapper>

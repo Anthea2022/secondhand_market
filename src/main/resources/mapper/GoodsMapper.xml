@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="anthea.secondhand_market.dao.GoodsMapper">
+    <resultMap id="BaseResultMap" type="anthea.secondhand_market.domain.Goods">
+        <id property="id" column="id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="refer" column="refer" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="INTEGER"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="listAllGoods" resultType="anthea.secondhand_market.domain.Goods">
+        select * from `goods`
+    </select>
+    <select id="getGoodsLikeName" resultType="anthea.secondhand_market.domain.Goods">
+        select * from `goods`
+        where name like concat('%', #{name}, '%')
+    </select>
+    <select id="getId" parameterType="anthea.secondhand_market.domain.Goods" resultType="anthea.secondhand_market.domain.Goods">
+        select * from `goods`
+        where name=#{name} AND refer=#{refer}
+    </select>
+    <update id="goodsBuy">
+        update `goods`
+        set num=num-#{num} where id=#{goodsId}
+    </update>
+</mapper>
