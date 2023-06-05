@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,7 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (ObjectUtils.isEmpty(userMapper.verifyPassword(user))) {
             throw new BusinessException(ResponseCodes.FAIL, "无此用户");
         }
-        return BaseResponse.success();
+        return BaseResponse.success(userMapper.verifyPassword(user));
     }
 
     @Override
@@ -85,8 +86,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public BaseResponse<Object> addGoods(Long userId, Goods goods) {
-        goodsMapper.insert(goods);
-        Long goodsId = goodsMapper.getId(goods).getId();
+        goodsMapper.add(goods);
+        Goods goodsById = goodsMapper.getId(goods);
+        Long goodsId = goodsById.getId();
         Sell sell = new Sell();
         sell.setSellerId(userId);
         sell.setGoodsId(goodsId);
@@ -99,14 +101,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (ObjectUtils.isEmpty(userMapper.selectById(userId))) {
             throw new BusinessException(ResponseCodes.QUERY_NULL_ERROR, "无该用户");
         }
-        if (ObjectUtils.isEmpty(goodsMapper.selectById(goodsId))) {
+        if (ObjectUtils.isEmpty(goodsMapper.queryById(goodsId))) {
             throw new BusinessException(ResponseCodes.QUERY_NULL_ERROR, "无该商品");
         }
-        int restNum = goodsMapper.selectById(goodsId).getNum();
+        int restNum = goodsMapper.queryById(goodsId).getNum();
         if (restNum < num) {
             throw new BusinessException(ResponseCodes.FAIL, "数量不足");
         }
-        if (userMapper.selectById(userId).getBalance() < goodsMapper.selectById(goodsId).getPrice()) {
+        if (userMapper.selectById(userId).getBalance() < goodsMapper.queryById(goodsId).getPrice()) {
             throw new BusinessException(ResponseCodes.FAIL, "余额不足");
         }
         String tryLock = RedisConstant.REDIS_LOCK + goodsId;
@@ -128,13 +130,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             int price = goodsMapper.selectById(goodsId).getPrice();
             // 买家付钱
             userMapper.costMoney(userId, price);
-            // 卖家得钱
-            userMapper.income(userId, price);
+           // 卖家得钱
+            Long sellerId = sellMapper.queryByGoodsId(goodsId).getSellerId();
+            userMapper.income(sellerId, price);
         } catch (Exception e) {
             throw new BusinessException(ResponseCodes.SYSTEM_ERROR);
         } finally {
             stringRedisTemplate.delete(tryLock);
         }
         return BaseResponse.success("购买成功");
+    }
+
+    @Override
+    public BaseResponse<Object> addUser(User user) {
+        userMapper.addUser(user);
+        return BaseResponse.success();
+    }
+
+    @Override
+    public BaseResponse<Object> setPassword(User user) {
+        if (ObjectUtils.isEmpty(userMapper.queryById(user.getId()))) {
+            throw new BusinessException(ResponseCodes.QUERY_NULL_ERROR, "无此用户");
+        }
+        userMapper.setPassword(user);
+        return BaseResponse.success();
     }
 }

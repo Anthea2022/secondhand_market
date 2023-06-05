@@ -14,5 +14,9 @@ public interface UserMapper extends BaseMapper<User> {
 
     void costMoney(Long userId, int money);
 
-    void addUser(String name, String password, String phone, String gender, int balance, Long stuId);
+    void addUser(User user);
+
+    void setPassword(User user);
+
+    User queryById(Long id);
 }

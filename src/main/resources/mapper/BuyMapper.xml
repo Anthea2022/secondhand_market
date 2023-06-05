@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="anthea.secondhand_market.dao.BuyMapper">
+    <select id="queryByUserId" resultType="anthea.secondhand_market.domain.Buy">
+        select * from `buy` where buyer_id = #{userId}
+    </select>
+</mapper>

@@ -1,7 +1,7 @@
 package anthea.secondhand_market.controller;
 
 import anthea.secondhand_market.domain.Goods;
-import anthea.secondhand_market.service.GoodsService;
+import anthea.secondhand_market.domain.User;
 import anthea.secondhand_market.service.UserService;
 import anthea.secondhand_market.util.BaseResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,13 +30,12 @@ public class UserController {
 
     @PostMapping("/sell")
     public BaseResponse<Object> addGoods(@NotNull Long userId, @NotBlank String name, @NotBlank String refer,
-                                         @NotNull int num, @NotNull int price, @NotBlank String img) {
+                                         @NotNull int num, @NotNull int price) {
         Goods goods = new Goods();
         goods.setName(name);
         goods.setRefer(refer);
         goods.setPrice(price);
         goods.setNum(num);
-        goods.setImg(img);
         return userService.addGoods(userId, goods);
     }
 
@@ -53,5 +52,17 @@ public class UserController {
     @GetMapping("/getUserData")
     public BaseResponse<Object> getUserData(@NotNull Long userId) {
         return userService.getUserDataById(userId);
+    }
+
+    @PostMapping("/register")
+    public BaseResponse<Object> addUser(@NotBlank String name, @NotBlank String password, @NotBlank String phone, @NotBlank String gender, @NotNull Long stuId) {
+        User user = new User(name, password, phone, gender, stuId);
+        return userService.addUser(user);
+    }
+
+    @PostMapping("/setPassword")
+    public BaseResponse<Object> setPassword(@NotNull Long id, @NotBlank String password) {
+        User user = new User(id, password);
+        return userService.setPassword(user);
     }
 }

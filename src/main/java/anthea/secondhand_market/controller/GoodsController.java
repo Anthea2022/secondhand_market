@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author anthea
@@ -27,5 +28,15 @@ public class GoodsController {
     @GetMapping("/getGoodsLikeName")
     public BaseResponse<Object> getGoodsLikeName(@NotBlank String name) {
         return goodsService.getGoodsLikeName(name);
+    }
+
+    @GetMapping("/getUserGoods")
+    public BaseResponse<Object> getUserGoods(@NotNull Long userId) {
+        return goodsService.getUserGoods(userId);
+    }
+
+    @GetMapping("/getUserSell")
+    public BaseResponse<Object> getUserSell(@NotNull Long userId) {
+        return goodsService.getUserSell(userId);
     }
 }

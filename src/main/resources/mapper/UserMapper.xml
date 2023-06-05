@@ -28,51 +28,14 @@
     </update>
     <insert id="addUser" parameterType="anthea.secondhand_market.domain.User">
         insert into `user`
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id!=null">
-                id,
-            </if>
-            <if test="name!=null">
-                name,
-            </if>
-            <if test="password!=null">
-                password,
-            </if>
-            <if test="phone!=null">
-                phone,
-            </if>
-            <if test="balance!=null">
-                balance,
-            </if>
-            <if test="stu_id!=null">
-                stu_id,
-            </if>
-            <if test="gender!=null">
-                gender,
-            </if>
-        </trim>
-        <trim prefix="value(" suffix=")" suffixOverrides=",">
-            <if test="id!=null">
-                #{id},
-            </if>
-            <if test="name!=null">
-                #{name},
-            </if>
-            <if test="password!=null">
-                #{password},
-            </if>
-            <if test="phone!=null">
-                #{phone},
-            </if>
-            <if test="balance!=null">
-                #{balance},
-            </if>
-            <if test="stu_id!=null">
-                #{stuId},
-            </if>
-            <if test="gender!=null">
-                #{gender}
-            </if>
-        </trim>
+        (name, password, phone, gender, stu_id, balance)
+        values (#{name},#{password},#{phone},#{gender},#{stuId},0)
     </insert>
+    <update id="setPassword">
+        update `user`
+        set password = #{password} where id = #{id}
+    </update>
+    <select id="queryById" resultType="anthea.secondhand_market.domain.User">
+        select * from `user` where id = #{id}
+    </select>
 </mapper>

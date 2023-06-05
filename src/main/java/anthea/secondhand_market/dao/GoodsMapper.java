@@ -18,4 +18,12 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     Goods getId(Goods goods);
 
     void goodsBuy(Long goodsId, int num);
+
+    void add(Goods goods);
+
+    Goods queryById(Long id);
+
+    List<Goods> queryBySellerId(Long userId);
+
+    List<Goods> queryByBuyerId(Long userId);
 }

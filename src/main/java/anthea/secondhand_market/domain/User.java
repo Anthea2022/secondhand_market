@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+import static anthea.secondhand_market.constant.consts.BALANCEConstant.BALANCE_ZERO;
+
 /**
  * @author anthea
  * @date 2023/4/20 23:54
@@ -53,6 +55,20 @@ public class User implements Serializable {
 
     public User(String name, String password) {
         this.name = name;
+        this.password = password;
+    }
+
+    public User(String name, String password, String phone, String gender, Long stuId) {
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.gender = gender;
+        this.stuId = stuId;
+        this.balance = BALANCE_ZERO;
+    }
+
+    public User(Long id, String password) {
+        this.id = id;
         this.password = password;
     }
 }

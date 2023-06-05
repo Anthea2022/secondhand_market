@@ -12,7 +12,7 @@
         <result property="num" column="num" jdbcType="INTEGER"/>
     </resultMap>
     <select id="listAllGoods" resultType="anthea.secondhand_market.domain.Goods">
-        select * from `goods`
+        select * from `goods` where num > 0
     </select>
     <select id="getGoodsLikeName" resultType="anthea.secondhand_market.domain.Goods">
         select * from `goods`
@@ -26,4 +26,16 @@
         update `goods`
         set num=num-#{num} where id=#{goodsId}
     </update>
+    <insert id="add" parameterType="anthea.secondhand_market.domain.Goods">
+        insert into `goods` (name, refer, price, num) values (#{name}, #{refer}, #{price}, #{num})
+    </insert>
+    <select id="queryById" resultType="anthea.secondhand_market.domain.Goods">
+        select * from `goods` where id = #{id}
+    </select>
+    <select id="queryBySellerId" resultType="anthea.secondhand_market.domain.Goods">
+        select * from `goods` where id in (select goods_id from `sell` where seller_id = #{userId})
+    </select>
+    <select id="queryByBuyerId" resultType="anthea.secondhand_market.domain.Goods">
+        select * from `goods` where id in (select goods_id from `buy` where buyer_id = #{userId})
+    </select>
 </mapper>

@@ -3,7 +3,7 @@ spring:
     name: timetable-view
   datasource:
     username: root
-    password:
+    password: sxn700320
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/secondhand_market?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     type: com.alibaba.druid.pool.DruidDataSource
