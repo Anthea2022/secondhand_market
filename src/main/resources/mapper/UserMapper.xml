@@ -38,4 +38,7 @@
     <select id="queryById" resultType="anthea.secondhand_market.domain.User">
         select * from `user` where id = #{id}
     </select>
+    <delete id="deleteUser" parameterType="java.lang.Long">
+        delete from `user` where id = #{userId}
+    </delete>
 </mapper>

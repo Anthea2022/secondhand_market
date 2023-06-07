@@ -19,4 +19,6 @@ public interface UserMapper extends BaseMapper<User> {
     void setPassword(User user);
 
     User queryById(Long id);
+
+    void deleteUser(Long userId);
 }

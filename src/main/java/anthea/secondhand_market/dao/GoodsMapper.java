@@ -26,4 +26,6 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     List<Goods> queryBySellerId(Long userId);
 
     List<Goods> queryByBuyerId(Long userId);
+
+    void deleteByUserId(Long userId);
 }

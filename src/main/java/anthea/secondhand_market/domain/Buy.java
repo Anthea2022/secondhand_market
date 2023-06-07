@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author anthea
@@ -35,6 +36,11 @@ public class Buy implements Serializable {
      * 数量
      */
     private int num;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
     public Buy(Long buyerId, Long goodsId, int num) {
         this.buyerId = buyerId;

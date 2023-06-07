@@ -13,4 +13,6 @@ public interface SellMapper extends BaseMapper<Sell> {
     Sell queryByGoodsId(Long goodsId);
 
     List<Sell> queryByUserId(Long userId);
+
+    void deleteByUserId(Long userId);
 }

@@ -6,4 +6,7 @@
     <select id="queryByUserId" resultType="anthea.secondhand_market.domain.Buy">
         select * from `buy` where buyer_id = #{userId}
     </select>
+    <delete id="deleteByUserId">
+        delete from `buy` where buyer_id = #{userId}
+    </delete>
 </mapper>

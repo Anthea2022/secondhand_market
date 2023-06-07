@@ -38,4 +38,7 @@
     <select id="queryByBuyerId" resultType="anthea.secondhand_market.domain.Goods">
         select * from `goods` where id in (select goods_id from `buy` where buyer_id = #{userId})
     </select>
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        delete from `goods` where id in (select goods_id from `sell` where seller_id = #{userId})
+    </delete>
 </mapper>

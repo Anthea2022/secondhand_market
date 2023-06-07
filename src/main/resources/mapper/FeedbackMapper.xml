@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="anthea.secondhand_market.dao.FeedbackMapper">
+    <insert id="add" parameterType="anthea.secondhand_market.domain.Feedback">
+        insert into `feedback` (admin_id, user_id, msg) value (#{adminId}, #{userId}, #{msg})
+    </insert>
+    <select id="selectByUserId" resultType="anthea.secondhand_market.domain.Feedback">
+        select * from `feedback` where admin_id = #{adminId}
+    </select>
+</mapper>

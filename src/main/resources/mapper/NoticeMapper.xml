@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="anthea.secondhand_market.dao.NoticeMapper">
+    <insert id="add" parameterType="anthea.secondhand_market.domain.Notice">
+        insert into `notice` (msg, user_from ,user_to) values (#{msg}, #{userFrom}, #{userTo})
+    </insert>
+    <select id="selectByUserId" parameterType="java.lang.Long" resultType="anthea.secondhand_market.domain.Notice">
+        select * from `notice` where user_to = #{userId}
+    </select>
+</mapper>

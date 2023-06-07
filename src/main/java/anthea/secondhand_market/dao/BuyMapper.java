@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface BuyMapper extends BaseMapper<Buy> {
     List<Buy> queryByUserId(Long userId);
+
+    void deleteByUserId(Long userId);
 }
